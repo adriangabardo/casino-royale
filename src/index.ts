@@ -1,9 +1,10 @@
-import readline from "readline";
 import fs from "fs";
 
 import { InputValidation } from "./Helpers/InputValidation";
 import { LineSplitter } from "./Helpers/LineSplitter";
 import { Card } from "./Card";
+import { Player, FiveCards } from "./Player";
+import { comparePlayerHands } from "./Helpers/CompareHighestCard";
 
 /**
  * Main entry method for our library.
@@ -15,11 +16,8 @@ const casinoRoyale = (file: string): [string, string] => {
   var player1Hands = 0;
   var player2Hands = 0;
 
-  const readInterface = readline.createInterface({
-    input: fs.createReadStream(file),
-  });
-
-  readInterface.on("line", function (line) {
+  const data = fs.readFileSync(file).toString().split("\n");
+  data.forEach((line) => {
     // Check that the line is valid, otherwise skip it.
     const isValid = InputValidation.lineValidation(line);
     if (!isValid) {
@@ -31,10 +29,20 @@ const casinoRoyale = (file: string): [string, string] => {
     const playerCards1 = player1RawCards.map((line) => new Card(line));
     const playerCards2 = player2RawCards.map((line) => new Card(line));
 
-    console.log({ playerCards1, playerCards2 });
+    const player1Hand = new Player(playerCards1 as FiveCards);
+    const player2Hand = new Player(playerCards2 as FiveCards);
+
+    const winner = comparePlayerHands(player1Hand, player2Hand);
+    if (winner.player1) {
+      player1Hands++;
+    } else if (winner.player2) {
+      player2Hands++;
+    } else {
+      // Complete tie, do nothing.
+    }
   });
 
-  return [`Player 1: ${player1Hands} hands`, `Player 2: ${player2Hands} hands`];
+  return [`Player 1: ${player1Hands}`, `Player 2: ${player2Hands}`];
 };
 
 export { casinoRoyale };

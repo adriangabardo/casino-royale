@@ -1,5 +1,5 @@
-import { expect } from "chai";
 import "mocha";
+import { expect } from "chai";
 
 import { LineSplitter } from "./LineSplitter";
 
@@ -46,7 +46,7 @@ describe("LineSplitter", () => {
 
       testCases.forEach((testCase) => {
         expect(() => LineSplitter.lineSplitter(testCase)).to.throw(
-          "Players hands does not contain 10 cards."
+          "Players hands does not contain 10 valid cards."
         );
       });
     });

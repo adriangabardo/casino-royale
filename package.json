@@ -4,7 +4,8 @@
   "description": "Poker hand counting library",
   "main": "index.js",
   "scripts": {
-    "start": "tsc --watch"
+    "start": "tsc --watch",
+    "test": "mocha -r ts-node/register src/**/*.test.ts"
   },
   "bin": {
     "casinoroyale": "./bin/main.js"
@@ -19,6 +20,11 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.34"
+    "@types/chai": "^4.2.15",
+    "@types/mocha": "^8.2.1",
+    "@types/node": "^14.14.34",
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2",
+    "ts-node": "^9.1.1"
   }
 }

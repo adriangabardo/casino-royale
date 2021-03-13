@@ -4,11 +4,21 @@
   "description": "Poker hand counting library",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc --watch"
+  },
+  "bin": {
+    "casinoroyale": "./bin/main.js"
   },
   "keywords": [
     "CLI"
   ],
+  "preferGlobal": true,
   "author": "Adrian Gabardo",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.34"
+  }
 }

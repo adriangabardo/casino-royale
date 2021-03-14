@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Card = void 0;
+exports.Suit = exports.Card = void 0;
 var Suit;
 (function (Suit) {
     Suit["D"] = "D";
@@ -8,6 +8,11 @@ var Suit;
     Suit["S"] = "S";
     Suit["C"] = "C";
 })(Suit || (Suit = {}));
+exports.Suit = Suit;
+/**
+ * A Card is comprised of a value based on 2-10, Jack(11), Queen(12), King(13), Ace(14)
+ * and of a suit of Diamonds, Hearts, Spades or Clubs.
+ */
 var Card = /** @class */ (function () {
     /**
      * Construct a card from a string value of a valid card.
@@ -35,6 +40,8 @@ var Card = /** @class */ (function () {
                 return 13;
             case "A":
                 return 14;
+            // Not validating numbers < 2 or > 14 because InputValidation should pick that up.
+            // Letters other than the ones above will return NaN.
             default:
                 return Number(rawValue);
         }

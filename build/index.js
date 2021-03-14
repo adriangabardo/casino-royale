@@ -25,7 +25,7 @@ var InputValidation_1 = require("./Helpers/InputValidation");
 var LineSplitter_1 = require("./Helpers/LineSplitter");
 var Card_1 = require("./Card");
 var Player_1 = require("./Player");
-var CompareHighestCard_1 = require("./Helpers/CompareHighestCard");
+var ComparePlayerHands_1 = require("./Helpers/ComparePlayerHands");
 /**
  * Main entry method for our library.
  * @param file - File to read stream of player hands from.
@@ -45,9 +45,11 @@ var casinoRoyale = function (file) {
         var _a = __read(LineSplitter_1.LineSplitter.lineSplitter(line), 2), player1RawCards = _a[0], player2RawCards = _a[1];
         var playerCards1 = player1RawCards.map(function (line) { return new Card_1.Card(line); });
         var playerCards2 = player2RawCards.map(function (line) { return new Card_1.Card(line); });
+        // Initiating player with their respective cards.
         var player1Hand = new Player_1.Player(playerCards1);
         var player2Hand = new Player_1.Player(playerCards2);
-        var winner = CompareHighestCard_1.comparePlayerHands(player1Hand, player2Hand);
+        // Comparing players' hands for a winner.
+        var winner = ComparePlayerHands_1.comparePlayerHands(player1Hand, player2Hand);
         if (winner.player1) {
             player1Hands++;
         }

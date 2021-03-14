@@ -32,6 +32,9 @@ var Combinations = /** @class */ (function () {
     Combinations.highestCard = function (cards) {
         return cards.sort(function (cardA, cardB) { return cardB.value - cardA.value; })[0];
     };
+    /**
+     * Finds a high card if cards includes an Ace.
+     */
     Combinations.highCard = function (cards) {
         if (cards.filter(function (card) { return card.value == 14; }).length > 0) {
             return {
@@ -93,6 +96,7 @@ var Combinations = /** @class */ (function () {
         if (combination.length == 0) {
             return { rank: 0, highestCard: Combinations.highestCard(cards).value };
         }
+        // Return the highest ranked combination from the forEach.
         return combination.sort(function (a, b) { return b.rank - a.rank; })[0];
     };
     /**
@@ -105,41 +109,52 @@ var Combinations = /** @class */ (function () {
         var isConsecutive = true;
         var i = 0;
         do {
+            // Checks if current sorted + 1 is equal to the next value in sorted.
             isConsecutive = sorted[i].value + 1 == sorted[i + 1].value;
             i++;
         } while (isConsecutive == true && i < sorted.length - 1);
         if (isFlush && isConsecutive) {
+            // Straight flush
             return { rank: 9, highestCard: Combinations.highestCard(cards).value };
         }
         else if (isFlush) {
+            // Flush
             return {
                 rank: 6,
                 highestCard: Combinations.highestCard(cards).value,
             };
         }
         else if (isConsecutive) {
+            // Straight
             return {
                 rank: 5,
                 highestCard: Combinations.highestCard(cards).value,
             };
         }
+        // Not a straight, flush or straight flush. Returning rank 0.
         return { rank: 0, highestCard: Combinations.highestCard(cards).value };
     };
     /**
      * Returns a four of a kind.
      */
     Combinations.fourOfAKind = function (cards) {
-        for (var i = 0; i < cards.length; i++) {
+        // Only really needs to iterate twice, if second card isn't four of a kind it's not in the set.
+        for (var i = 0; i < 2; i++) {
             var kind = cards.filter(function (entry) { return entry.value == cards[i].value; });
             if (kind.length == 4) {
+                // Four of a kind found.
                 return {
                     rank: 8,
                     highestCard: kind[0].value,
                 };
             }
         }
+        // Not four of a kind, return rank 0.
         return { rank: 0, highestCard: Combinations.highestCard(cards).value };
     };
+    /**
+     * Returns a royal flush.
+     */
     Combinations.royalFlush = function (cards) {
         var values = cards.map(function (card) { return card.value; });
         var suits = cards.map(function (card) { return card.suit; });
@@ -156,6 +171,7 @@ var Combinations = /** @class */ (function () {
                 highestCard: Combinations.highestCard(cards).value,
             };
         }
+        // Royal flush not found, returns rank 0.
         return { rank: 0, highestCard: Combinations.highestCard(cards).value };
     };
     return Combinations;

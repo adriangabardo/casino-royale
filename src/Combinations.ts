@@ -1,13 +1,5 @@
 import { Card } from "./Card";
-import { FiveCards } from "./Player";
-
-/**
- * A combination determined by specific rulesets
- */
-interface Combination {
-  rank: number;
-  highestCard: number;
-}
+import { Combination, FiveCards } from "./Helpers/Types";
 
 class Combinations {
   /**
@@ -42,6 +34,9 @@ class Combinations {
     return cards.sort((cardA, cardB) => cardB.value - cardA.value)[0];
   }
 
+  /**
+   * Finds a high card if cards includes an Ace.
+   */
   static highCard(cards: FiveCards): Combination {
     if (cards.filter((card) => card.value == 14).length > 0) {
       return {
@@ -115,6 +110,7 @@ class Combinations {
       return { rank: 0, highestCard: Combinations.highestCard(cards).value };
     }
 
+    // Return the highest ranked combination from the forEach.
     return combination.sort((a, b) => b.rank - a.rank)[0];
   }
 
@@ -130,24 +126,29 @@ class Combinations {
     var isConsecutive: boolean = true;
     var i = 0;
     do {
+      // Checks if current sorted + 1 is equal to the next value in sorted.
       isConsecutive = sorted[i].value + 1 == sorted[i + 1].value;
       i++;
     } while (isConsecutive == true && i < sorted.length - 1);
 
     if (isFlush && isConsecutive) {
+      // Straight flush
       return { rank: 9, highestCard: Combinations.highestCard(cards).value };
     } else if (isFlush) {
+      // Flush
       return {
         rank: 6,
         highestCard: Combinations.highestCard(cards).value,
       };
     } else if (isConsecutive) {
+      // Straight
       return {
         rank: 5,
         highestCard: Combinations.highestCard(cards).value,
       };
     }
 
+    // Not a straight, flush or straight flush. Returning rank 0.
     return { rank: 0, highestCard: Combinations.highestCard(cards).value };
   }
 
@@ -155,9 +156,11 @@ class Combinations {
    * Returns a four of a kind.
    */
   static fourOfAKind(cards: FiveCards): Combination {
-    for (var i = 0; i < cards.length; i++) {
+    // Only really needs to iterate twice, if second card isn't four of a kind it's not in the set.
+    for (var i = 0; i < 2; i++) {
       const kind = cards.filter((entry) => entry.value == cards[i].value);
       if (kind.length == 4) {
+        // Four of a kind found.
         return {
           rank: 8,
           highestCard: kind[0].value,
@@ -165,9 +168,13 @@ class Combinations {
       }
     }
 
+    // Not four of a kind, return rank 0.
     return { rank: 0, highestCard: Combinations.highestCard(cards).value };
   }
 
+  /**
+   * Returns a royal flush.
+   */
   static royalFlush(cards: FiveCards): Combination {
     const values = cards.map((card) => card.value);
     const suits = cards.map((card) => card.suit);
@@ -187,6 +194,7 @@ class Combinations {
       };
     }
 
+    // Royal flush not found, returns rank 0.
     return { rank: 0, highestCard: Combinations.highestCard(cards).value };
   }
 }

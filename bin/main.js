@@ -11,7 +11,6 @@ const argv = require("yargs")
   .help("h")
   .alias("h", "help").argv;
 
-const results = casinoRoyale(argv.f);
-results.forEach((result) => {
+casinoRoyale(argv.f).forEach((result) => {
   console.log(result);
 });

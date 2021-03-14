@@ -3,8 +3,9 @@ import fs from "fs";
 import { InputValidation } from "./Helpers/InputValidation";
 import { LineSplitter } from "./Helpers/LineSplitter";
 import { Card } from "./Card";
-import { Player, FiveCards } from "./Player";
-import { comparePlayerHands } from "./Helpers/CompareHighestCard";
+import { Player } from "./Player";
+import { comparePlayerHands } from "./Helpers/ComparePlayerHands";
+import { FiveCards } from "./Helpers/Types";
 
 /**
  * Main entry method for our library.
@@ -29,9 +30,11 @@ const casinoRoyale = (file: string): [string, string] => {
     const playerCards1 = player1RawCards.map((line) => new Card(line));
     const playerCards2 = player2RawCards.map((line) => new Card(line));
 
+    // Initiating player with their respective cards.
     const player1Hand = new Player(playerCards1 as FiveCards);
     const player2Hand = new Player(playerCards2 as FiveCards);
 
+    // Comparing players' hands for a winner.
     const winner = comparePlayerHands(player1Hand, player2Hand);
     if (winner.player1) {
       player1Hands++;

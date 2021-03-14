@@ -5,6 +5,10 @@ enum Suit {
   C = "C",
 }
 
+/**
+ * A Card is comprised of a value based on 2-10, Jack(11), Queen(12), King(13), Ace(14)
+ * and of a suit of Diamonds, Hearts, Spades or Clubs.
+ */
 class Card {
   value: number;
   suit: Suit;
@@ -38,10 +42,12 @@ class Card {
       case "A":
         return 14;
 
+      // Not validating numbers < 2 or > 14 because InputValidation should pick that up.
+      // Letters other than the ones above will return NaN.
       default:
         return Number(rawValue);
     }
   }
 }
 
-export { Card };
+export { Card, Suit };

@@ -1,4 +1,3 @@
-import "mocha";
 import { expect } from "chai";
 
 import { LineSplitter } from "./LineSplitter";
@@ -42,6 +41,7 @@ describe("LineSplitter", () => {
         "i am not even a line of player hands",
         "ABCDEFGHIJKLMNOP",
         "Currently listening to Beat 54 by Jungle. Life is good.",
+        "9C 9D 8D 7C 3C 2S KD TH 9H 8H 9H",
       ];
 
       testCases.forEach((testCase) => {

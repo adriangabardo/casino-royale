@@ -1,7 +1,6 @@
 import { Card } from "./Card";
 import { Combination, Combinations } from "./Combinations";
-
-type FiveCards = [Card, Card, Card, Card, Card]; // Array of specifically 5 cards
+import { FiveCards } from "./Helpers/Types";
 
 class Player {
   cards: FiveCards;
@@ -9,6 +8,10 @@ class Player {
   highCard: Card;
   highestRank: Combination;
 
+  /**
+   * A Player with a set of 5 cards.
+   * The class has all of the player's valid combinations, the highest ranked one, and the players highest card.
+   */
   constructor(cards: FiveCards) {
     this.cards = cards;
     this.combinations = Combinations.find(this.cards);
@@ -17,4 +20,4 @@ class Player {
   }
 }
 
-export { Player, FiveCards };
+export { Player };
